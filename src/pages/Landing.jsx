@@ -75,17 +75,26 @@ function BasicExample() {
       </div>
       <h1
         className="text-center"
-        style={{ marginTop: "45px", fontSize: "60px", letterSpacing: "-3px" }}
+        style={{ marginTop: "15%", fontSize: "60px", letterSpacing: "-3px" }}
       >
         {" "}
         why choose us?
       </h1>
 
-      <Row className="d-flex" style={{ marginTop: "105px", height: "100vh" }}>
-        <Col xl={2} style={{ marginLeft: "450px", textAlign: "right" }}>
+      <Row
+        className="d-flex"
+        style={{
+          marginTop: "5%",
+        }}
+      >
+        <Col xl={6} style={{ textAlign: "right" }}>
           <h1
             className="d-flex h-100 mt-4 d-flex justify-content-end"
-            style={{ fontSize: "80px", letterSpacing: "-3px" }}
+            style={{
+              fontSize: "80px",
+              letterSpacing: "-3px",
+              marginRight: "10px",
+            }}
           >
             <br />
             track
@@ -97,7 +106,7 @@ function BasicExample() {
             <br />
           </h1>
         </Col>
-        <Col xl={4}>
+        <Col xl={6}>
           <PieChart />
         </Col>
       </Row>
