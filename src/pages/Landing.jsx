@@ -3,7 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import React, { useState, useEffect } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Row, Col, Button, Card, Modal } from "react-bootstrap";
+import { Row, Col, Card, Modal, Button } from "react-bootstrap";
 import AnimatedText from "../component/AnimatedText";
 import ImageCarouselModal from "../component/ImageCarousel";
 ("../component/ImageCarousel");
@@ -11,12 +11,25 @@ import PieChart from "../component/DemoPieChart";
 import { useInView } from "react-intersection-observer";
 import computerImage from "../assets/computer.jpg";
 import Plans from "../component/Plans";
+import { useMediaQuery } from "react-responsive";
+import styled from "styled-components";
+import useScreenSize from "../Utility";
 
 function BasicExample() {
   const [showModal, setShowModal] = useState(false);
+
+  const [fadeIn, setFadeIn] = useState(false);
+
+  useEffect(() => {
+    // Trigger fade-in effect on mount
+    setFadeIn(true);
+  }, []);
   const { ref, inView } = useInView({
     triggerOnce: true,
   });
+
+  const { isSmallScreen, isMediumScreen, isLargeScreen } = useScreenSize();
+
   const images = [
     "../src/assets/mealprep.png",
     "../src/assets/fitness.png",
@@ -30,6 +43,11 @@ function BasicExample() {
   const handleCloseModal = () => {
     setShowModal(false);
   };
+  useEffect(() => {
+    // Trigger fade-in effect on mount
+    setFadeIn(true);
+  }, []);
+
   const [delay, setDelay] = useState(2000); // Initial delay in milliseconds
 
   return (
@@ -45,37 +63,53 @@ function BasicExample() {
   */}
       </div>
       <div className="landing-container">
-        <Row>
-          <Col xl={7} lg={1} md={1}></Col>
-          <Col xl={3} lg={3} style={{ marginTop: "14%", marginLeft: "100px" }}>
-            <h1
-              className="d-flex h-100"
-              style={{ fontSize: "66px", letterSpacing: "-3px" }}
+        <Row className="h-100">
+          <Row>
+            <Col
+              xl={11}
+              lg={12}
+              md={12}
+              xs={12}
+              sm={12}
+              className={`d-flex ${
+                !isLargeScreen
+                  ? "text-center justify-content-center align-items-start mt-4"
+                  : "justify-content-end align-items-end" // Add text-center class for small screens
+              }`}
             >
-              begin <br />
-              your journey
-            </h1>
-            <Button
-              style={{
-                backgroundColor: "black",
-                borderColor: "black",
-                color: "white",
-                textAlign: "left",
-                position: "absolute",
-                width: "150px",
-                zIndex: "9999", // Increase the z-index
-              }}
-              className="text-center"
-              color="red"
-            >
-              start now
-            </Button>
-          </Col>
+              <h1
+                style={{
+                  fontSize: "66px",
+                  letterSpacing: "-3px",
+                  opacity: fadeIn ? 1 : 0, // Set opacity based on fade-in state
+                  transition: "opacity 2s ease-in-out", // Apply transition effect
+                }}
+              >
+                begin <br />
+                your journey
+                <br />
+                <Row>
+                  <Col
+                    className={
+                      !isLargeScreen
+                        ? "d-flex justify-content-center"
+                        : "d-flex justify-content-start"
+                    }
+                  >
+                    <Button variant="dark" className="mt-2">
+                      start now
+                    </Button>
+                  </Col>
+                </Row>
+              </h1>
+            </Col>
+          </Row>
+          <Row></Row>
         </Row>
       </div>
       <h1
         className="text-center"
-        style={{ marginTop: "15%", fontSize: "60px", letterSpacing: "-3px" }}
+        style={{ marginTop: "10%", fontSize: "74px", letterSpacing: "-3px" }}
       >
         {" "}
         why choose us?
@@ -87,11 +121,15 @@ function BasicExample() {
           marginTop: "5%",
         }}
       >
-        <Col xl={6} style={{ textAlign: "right" }}>
+        <Col xl={6} lg={4} style={{ textAlign: "right" }}>
           <h1
-            className="d-flex h-100 mt-4 d-flex justify-content-end"
+            className={`d-flex h-100 mt-2 ${
+              !isLargeScreen
+                ? `justify-content-center text-center`
+                : `justify-content-end`
+            }`}
             style={{
-              fontSize: "80px",
+              fontSize: "74px",
               letterSpacing: "-3px",
               marginRight: "10px",
             }}
@@ -106,12 +144,19 @@ function BasicExample() {
             <br />
           </h1>
         </Col>
-        <Col xl={6}>
+        <Col xl={2} lg={4}>
           <PieChart />
         </Col>
       </Row>
-      <Row>
-        <Col xl={6}>
+      <Row className="mt-4">
+        <Col
+          xl={6}
+          lg={6}
+          sm={12}
+          xs={12}
+          md={12}
+          className="order-xl-1 order-lg-2 order-md-2 order-sm-2 order-2"
+        >
           <img
             src={computerImage}
             height="500px"
@@ -119,9 +164,20 @@ function BasicExample() {
             style={{ borderRadius: "15px" }}
           ></img>
         </Col>
-        <Col xl={4} style={{ marginTop: "50px" }}>
+        <Col
+          xl={4}
+          lg={4}
+          md={4}
+          sm={12}
+          xs={12}
+          className={`order-xl-1 order-xs-1 order-sm-1 order-1`}
+        >
           <h1
-            className="d-flex d-flex mt-2 justify-content-start"
+            className={`d-flex h-100 mt-5 ${
+              !isLargeScreen
+                ? `justify-content-center text-center`
+                : `justify-content-start`
+            }`}
             style={{ fontSize: "80px", letterSpacing: "-3px" }}
           >
             post
@@ -133,7 +189,6 @@ function BasicExample() {
             <br />
           </h1>
         </Col>
-        <Col xl={4}></Col>
       </Row>
       <br />
       <Row className="mt-4">
